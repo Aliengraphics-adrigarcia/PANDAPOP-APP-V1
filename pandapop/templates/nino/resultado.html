@@ -1,0 +1,25 @@
+{% extends "nino/base_nino.html" %}
+{% from "partials/_iconos.html" import estrella_llena %}
+{% set atras = url_for('nino.actividad', id_actividad=actividad.id_actividad) %}
+{% block titulo %}¡Felicitaciones!{% endblock %}
+{% block contenido %}
+<section class="resultado">
+  <div class="resultado__imagen">
+    <img src="{{ url_for('static', filename='img/logro-trofeo.webp') }}" width="900" height="746"
+         alt="Un trofeo con cinta y estrellas">
+  </div>
+  <h1>¡Felicitaciones!</h1>
+  <p class="texto-suave">Terminaste «{{ actividad.titulo }}».</p>
+  <div class="estrellas" role="img" aria-label="Tres estrellas">
+    {{ estrella_llena() }}{{ estrella_llena() }}{{ estrella_llena() }}
+  </div>
+  <p class="monedas-grandes">{{ actividad.puntaje_maximo }} Monedas</p>
+
+  {% if siguiente %}
+    <a class="btn btn--verde btn--bloque" href="{{ url_for('nino.actividad', id_actividad=siguiente.id_actividad) }}">Siguiente nivel</a>
+  {% else %}
+    <a class="btn btn--verde btn--bloque" href="{{ url_for('nino.modulos') }}">Siguiente nivel</a>
+  {% endif %}
+  <p class="nota">Pantalla de muestra: estas monedas son un ejemplo y todavía no se suman a tu total.</p>
+</section>
+{% endblock %}

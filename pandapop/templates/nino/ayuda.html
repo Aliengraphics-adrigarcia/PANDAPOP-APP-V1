@@ -1,0 +1,15 @@
+{% extends "nino/base_nino.html" %}
+{% from "partials/_marca.html" import panda %}
+{% block titulo %}Ayuda{% endblock %}
+{% block contenido %}
+<section class="centro-total centro-total--alto">
+  {{ panda('panda panda--mediano') }}
+  <h1>¿En qué te ayudamos?</h1>
+</section>
+<section class="seccion" aria-label="Preguntas frecuentes">
+  <details class="pista"><summary>¿Cómo gano monedas?</summary><p>Completa actividades. Cada una te da monedas y, con ellas, subes de nivel.</p></details>
+  <details class="pista"><summary>¿Dónde veo mis actividades?</summary><p>Abre el menú (arriba a la izquierda) y entra a «Mis Actividades» o a «Módulos».</p></details>
+  <details class="pista"><summary>Olvidé mi clave</summary><p>Pídele a tu acudiente que te ayude a recuperarla.</p></details>
+  <details class="pista"><summary>Algo me preocupa</summary><p>Cuéntale a un adulto de confianza: tu acudiente, tu profe o tu terapeuta. Ellos siempre están para ayudarte.</p></details>
+</section>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "nino/base_nino.html" %}
+{% from "partials/_iconos.html" import icono %}
+{% set atras = url_for('nino.menu') %}
+{% block titulo %}Mis avances{% endblock %}
+{% block contenido %}
+<h1>Mis avances</h1>
+
+{% include "partials/_nivel.html" %}
+
+<section class="seccion" aria-labelledby="t-resumen">
+  <h2 id="t-resumen">Tu resumen</h2>
+  <div class="rejilla">
+    <div class="dato"><strong>{{ resumen.actividades_completadas or 0 }}</strong><span>actividades completadas</span></div>
+    <div class="dato"><strong>{{ resumen.asignaciones_completadas or 0 }} de {{ resumen.asignaciones or 0 }}</strong><span>tareas asignadas</span></div>
+    <div class="dato"><strong>{{ (resumen.porcentaje_cumplimiento or 0)|float|round|int }}%</strong><span>de cumplimiento</span></div>
+    <div class="dato"><strong>{{ (resumen.puntaje_promedio_pct or 0)|float|round|int }}%</strong><span>de puntaje promedio</span></div>
+  </div>
+</section>
+
+<section class="seccion" aria-labelledby="t-mov">
+  <h2 id="t-mov">Últimas monedas ganadas</h2>
+  <ul class="lista-simple">
+    {% for m in movimientos %}
+      <li class="tarjeta fila-simple">
+        <span><strong>{{ m.motivo }}</strong><br><span class="texto-suave">{{ m.fecha_movimiento.strftime('%d/%m/%Y') }}</span></span>
+        <span class="moneda">{{ icono('moneda') }}<span>{{ '+' if m.puntos > 0 else '' }}{{ m.puntos }}</span></span>
+      </li>
+    {% else %}
+      <li class="vacio">Aún no tienes monedas. ¡Completa tu primera actividad!</li>
+    {% endfor %}
+  </ul>
+</section>
+{% endblock %}

@@ -1,0 +1,13 @@
+{# Tarjeta de nivel y monedas. Requiere la variable `puntos` (ver estado_puntos en nino.py). #}
+{% from "partials/_iconos.html" import icono %}
+<section class="tarjeta nivel" aria-label="Tu nivel">
+  <div class="nivel__fila">
+    <p class="nivel__nombre">Nivel {{ puntos.nombre }}</p>
+    <p class="moneda">{{ icono('moneda') }}<span>{{ puntos.puntos }} {{ 'moneda' if puntos.puntos == 1 else 'monedas' }}</span></p>
+  </div>
+  <progress max="100" value="{{ puntos.porcentaje }}" aria-label="Avance hacia el siguiente nivel">{{ puntos.porcentaje }}%</progress>
+  <p class="ayuda-texto">
+    {% if puntos.siguiente %}Te faltan {{ puntos.faltan }} {{ 'moneda' if puntos.faltan == 1 else 'monedas' }} para llegar a {{ puntos.siguiente }}.
+    {% else %}¡Llegaste al nivel más alto!{% endif %}
+  </p>
+</section>

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% from "partials/_marca.html" import panda %}
+{% block titulo %}¿Olvidaste tu clave?{% endblock %}
+{% block clase_body %}pagina-simple{% endblock %}
+{% block contenido %}
+<a class="volver" href="{{ url_for('auth.ingresar') }}">← Volver</a>
+<section class="centro-total">
+  {{ panda('panda panda--mediano') }}
+  <h1>¿Olvidaste tu clave?</h1>
+  <p class="texto-suave">No te preocupes. Pídele a tu acudiente que te ayude a recuperarla. Así tu cuenta se mantiene segura.</p>
+  <a class="btn btn--verde" href="{{ url_for('auth.ingresar') }}">Intentar de nuevo</a>
+</section>
+{% endblock %}

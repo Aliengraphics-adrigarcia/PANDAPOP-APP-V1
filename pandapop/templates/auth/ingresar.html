@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% from "partials/_marca.html" import panda %}
+{% from "partials/_campo.html" import campo %}
+{% block titulo %}Ingresar{% endblock %}
+{% block clase_body %}pagina-simple{% endblock %}
+{% block contenido %}
+<a class="volver" href="{{ url_for('auth.inicio') }}">← Volver</a>
+<section class="formulario-centrado">
+  {{ panda('panda panda--mediano') }}
+  <h1>Ingresar</h1>
+  <p class="texto-suave">¡Qué alegría verte de nuevo!</p>
+
+  {% if error %}<p class="alerta alerta--error" role="alert">{{ error }}</p>{% endif %}
+
+  <form method="post" action="{{ url_for('auth.ingresar') }}" novalidate>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
+    {{ campo('identificador', 'Usuario o correo', {}, {}, autocompletar='username', maxlen=150) }}
+    {{ campo('clave', 'Clave', {}, {}, tipo='password', autocompletar='current-password', maxlen=72) }}
+    <button class="btn btn--verde btn--bloque" type="submit">Ingresar</button>
+  </form>
+
+  <p class="centro"><a class="enlace" href="{{ url_for('auth.olvide') }}">¿Olvidaste tu clave?</a></p>
+  <p class="centro texto-suave">¿Aún no tienes cuenta? <a class="enlace" href="{{ url_for('auth.registro') }}">Crear cuenta</a></p>
+</section>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "nino/base_nino.html" %}
+{% from "partials/_iconos.html" import icono %}
+{% set atras = url_for('nino.inicio') %}
+{% block titulo %}Módulos{% endblock %}
+{% block contenido %}
+<h1>Módulos</h1>
+<p class="texto-suave">Elige un módulo y aprende jugando.</p>
+
+{% for grupo in grupos %}
+  <section class="seccion" id="{{ grupo.slug }}" aria-labelledby="t-{{ grupo.slug }}">
+    <h2 id="t-{{ grupo.slug }}"><span class="insignia insignia--{{ grupo.slug }}">{{ grupo.titulo }}</span></h2>
+    {% for m in grupo.modulos %}
+      <a class="tarjeta fila-enlace" href="{{ url_for('nino.modulo', id_modulo=m.id_modulo) }}">
+        <span class="fila-enlace__texto">
+          <span class="etiqueta">{{ m.categoria }}</span>
+          <strong>{{ m.titulo }}</strong>
+          <span class="texto-suave">{{ m.total_actividades }} {{ 'actividad' if m.total_actividades == 1 else 'actividades' }}</span>
+        </span>
+        {{ icono('flecha') }}
+      </a>
+    {% else %}
+      <p class="vacio">Pronto habrá más módulos para ti.</p>
+    {% endfor %}
+  </section>
+{% endfor %}
+{% endblock %}

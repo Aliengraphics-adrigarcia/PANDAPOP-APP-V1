@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% from "partials/_marca.html" import panda %}
+{% block titulo %}¡Cuenta creada!{% endblock %}
+{% block clase_body %}pagina-simple{% endblock %}
+{% block contenido %}
+<section class="centro-total">
+  {{ panda('panda panda--grande') }}
+  <h1>¡Listo, {{ datos.nombre }} ya es parte de PandaPop!</h1>
+  <p class="texto-suave">El perfil quedó creado. Para ingresar usa este usuario y la clave que elegiste:</p>
+  <p class="usuario-creado">{{ datos.usuario }}</p>
+  <a class="btn btn--verde" href="{{ url_for('auth.ingresar') }}">Ingresar</a>
+</section>
+{% endblock %}

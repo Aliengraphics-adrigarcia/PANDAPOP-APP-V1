@@ -1,0 +1,31 @@
+{# Iconos SVG propios (trazo simple). Uso: {{ icono('menu') }} #}
+{% macro icono(nombre) -%}
+<svg class="icono" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+{%- if nombre == 'inicio' -%}<path d="M3 11l9-8 9 8M5 10v10h14V10M10 20v-6h4v6"/>
+{%- elif nombre == 'modulos' -%}<rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/>
+{%- elif nombre == 'ayuda' -%}<circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17h.01"/>
+{%- elif nombre == 'perfil' -%}<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/>
+{%- elif nombre == 'menu' -%}<path d="M4 6h16M4 12h16M4 18h16"/>
+{%- elif nombre == 'cerrar' -%}<path d="M6 6l12 12M18 6L6 18"/>
+{%- elif nombre == 'atras' -%}<path d="M15 5l-7 7 7 7"/>
+{%- elif nombre == 'flecha' -%}<path d="M9 5l7 7-7 7"/>
+{%- elif nombre == 'estrella' -%}<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>
+{%- elif nombre == 'moneda' -%}<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/>
+{%- elif nombre == 'candado' -%}<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>
+{%- elif nombre == 'ojo' -%}<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>
+{%- elif nombre == 'check' -%}<path d="M5 12l5 5 9-10"/>
+{%- elif nombre == 'juego' -%}<rect x="3" y="7" width="18" height="11" rx="4"/><path d="M8 10v5M5.5 12.5h5M15.5 11.5h.01M18 13.5h.01"/>
+{%- elif nombre == 'libro' -%}<path d="M5 4h13a1 1 0 0 1 1 1v14H6a2 2 0 0 0-2 2V5a1 1 0 0 1 1-1zM4 19a2 2 0 0 1 2-2h13"/>
+{%- elif nombre == 'trofeo' -%}<path d="M8 4h8v5a4 4 0 0 1-8 0zM8 6H4c0 3 1.5 4.5 4 5M16 6h4c0 3-1.5 4.5-4 5M12 13v4M8 20h8M10 17h4"/>
+{%- elif nombre == 'avances' -%}<path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/>
+{%- elif nombre == 'regalo' -%}<rect x="3" y="9" width="18" height="12" rx="1"/><path d="M12 9v12M3 13h18M12 9c-3 0-4.5-1-4.5-2.5S9 4 10.5 5 12 9 12 9zM12 9c3 0 4.5-1 4.5-2.5S15 4 13.5 5 12 9 12 9z"/>
+{%- elif nombre == 'salir' -%}<path d="M9 4H5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h4M16 8l4 4-4 4M20 12H9"/>
+{%- elif nombre == 'reloj' -%}<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>
+{%- endif -%}
+</svg>
+{%- endmacro %}
+
+{# Estrella llena para la pantalla de resultado #}
+{% macro estrella_llena() -%}
+<svg class="estrella" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2.8l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.6l-5.8 3.1 1.1-6.5L2.6 9.6l6.5-.9z"/></svg>
+{%- endmacro %}

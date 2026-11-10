@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% from "partials/_marca.html" import marca %}
+{% block titulo %}Crecemos Aprendiendo{% endblock %}
+{% block clase_body %}pagina-portada{% endblock %}
+{% block contenido %}
+<section class="portada">
+  <p class="portada__marca">{{ marca('marca marca--grande') }}</p>
+  <div class="portada__imagen">
+    <img src="{{ url_for('static', filename='img/nino-tablet.webp') }}" width="800" height="752"
+         alt="Un niño con gafas y suéter rojo aprende con una tableta" fetchpriority="high">
+  </div>
+  <h1>Crecemos Aprendiendo</h1>
+  <p class="portada__texto">Un espacio donde Colegio, Hogar y Terapias, trabajan unidos para tu aprendizaje.</p>
+  <div class="portada__acciones">
+    <a class="btn btn--verde btn--bloque" href="{{ url_for('auth.registro') }}">Crear cuenta</a>
+    <a class="btn btn--borde btn--bloque" href="{{ url_for('auth.ingresar') }}">Iniciar sesión</a>
+  </div>
+  <p class="centro"><a class="enlace" href="{{ url_for('auth.olvide') }}">¿Olvidaste tu contraseña?</a></p>
+</section>
+{% endblock %}

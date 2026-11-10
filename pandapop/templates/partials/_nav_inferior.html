@@ -1,0 +1,9 @@
+{# Barra inferior: Inicio / Módulos / Ayuda / Perfil (sin "Ranking": no se comparan niños entre sí). #}
+{% from "partials/_iconos.html" import icono %}
+<nav class="nav-inferior" aria-label="Navegación principal">
+  {% for clave, texto, destino in [('inicio', 'Inicio', 'nino.inicio'), ('modulos', 'Módulos', 'nino.modulos'), ('ayuda', 'Ayuda', 'nino.ayuda'), ('perfil', 'Perfil', 'nino.perfil')] %}
+    <a href="{{ url_for(destino) }}" class="nav-inferior__item{% if nav == clave %} es-activo{% endif %}"{% if nav == clave %} aria-current="page"{% endif %}>
+      {{ icono(clave) }}<span>{{ texto }}</span>
+    </a>
+  {% endfor %}
+</nav>

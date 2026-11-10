@@ -1,0 +1,27 @@
+{% extends "nino/base_nino.html" %}
+{% from "partials/_iconos.html" import icono %}
+{% from "partials/_marca.html" import panda %}
+{% block titulo %}Perfil{% endblock %}
+{% block contenido %}
+<section class="centro-total centro-total--alto">
+  {{ panda('panda panda--mediano') }}
+  <h1>{{ nino.nombres }} {{ nino.apellidos }}</h1>
+  <p class="texto-suave">@{{ nino.nombre_usuario }}</p>
+</section>
+
+{% include "partials/_nivel.html" %}
+
+<section class="seccion" aria-labelledby="t-datos">
+  <h2 id="t-datos">Mis datos</h2>
+  <dl class="tarjeta definiciones">
+    <div><dt>Edad</dt><dd>{{ nino.edad }} años</dd></div>
+    {% if nino.grado %}<div><dt>Grado</dt><dd>{{ nino.grado }}</dd></div>{% endif %}
+    {% if institucion %}<div><dt>Mi colegio o centro</dt><dd>{{ institucion.nombre }}</dd></div>{% endif %}
+  </dl>
+</section>
+
+<form method="post" action="{{ url_for('auth.salir') }}">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <button class="btn btn--borde btn--bloque" type="submit">{{ icono('salir') }}Cerrar sesión</button>
+</form>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "nino/base_nino.html" %}
+{% from "partials/_iconos.html" import icono %}
+{% set atras = url_for('nino.modulos') %}
+{% block titulo %}{{ modulo.titulo }}{% endblock %}
+{% block contenido %}
+<p><span class="insignia insignia--{{ 'basico' if nivel_texto == 'Básico' else ('intermedio' if nivel_texto == 'Intermedio' else 'avanzado') }}">{{ nivel_texto }}</span> <span class="etiqueta">{{ modulo.categoria }}</span></p>
+<h1>{{ modulo.titulo }}</h1>
+{% if modulo.descripcion %}<p class="texto-suave">{{ modulo.descripcion }}</p>{% endif %}
+
+<section class="seccion" aria-labelledby="t-acts">
+  <h2 id="t-acts">Actividades</h2>
+  {% for a in actividades %}
+    <a class="tarjeta fila-enlace" href="{{ url_for('nino.actividad', id_actividad=a.id_actividad) }}">
+      <span class="fila-enlace__texto">
+        <strong>{{ a.titulo }}</strong>
+        <span class="texto-suave">{{ a.tipo|capitalize }} · {{ a.duracion_min }} min · {{ a.puntaje_maximo }} monedas</span>
+      </span>
+      {{ icono('flecha') }}
+    </a>
+  {% else %}
+    <p class="vacio">Este módulo aún no tiene actividades.</p>
+  {% endfor %}
+</section>
+{% endblock %}

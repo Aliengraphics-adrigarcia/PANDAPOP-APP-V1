@@ -1,0 +1,22 @@
+{% extends "nino/base_nino.html" %}
+{% from "partials/_iconos.html" import icono %}
+{% set atras = url_for('nino.menu') %}
+{% block titulo %}{{ titulo }}{% endblock %}
+{% block contenido %}
+<h1>{{ titulo }}</h1>
+<section class="seccion" aria-label="{{ titulo }}">
+  {% for a in lista %}
+    <a class="tarjeta fila-enlace" href="{{ url_for('nino.actividad', id_actividad=a.id_actividad) }}">
+      <span class="fila-enlace__texto">
+        {% if a.estado %}<span class="etiqueta etiqueta--{{ a.estado|lower }}">{{ a.estado|replace('_', ' ')|capitalize }}</span>{% endif %}
+        <strong>{{ a.titulo }}</strong>
+        <span class="texto-suave">{{ a.modulo }} · {{ a.tipo|capitalize }} · {{ a.duracion_min }} min · {{ a.puntaje_maximo }} monedas</span>
+      </span>
+      {{ icono('flecha') }}
+    </a>
+  {% else %}
+    <p class="vacio">{{ vacio }}</p>
+    <a class="btn btn--verde btn--bloque" href="{{ url_for('nino.modulos') }}">Ver módulos</a>
+  {% endfor %}
+</section>
+{% endblock %}

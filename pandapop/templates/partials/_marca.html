@@ -1,0 +1,20 @@
+{# Mascota "Pandi" y logotipo de PandaPop (dibujo propio, sin recursos externos) #}
+{% macro panda(clase='panda') -%}
+<svg class="{{ clase }}" viewBox="0 0 120 120" role="img" aria-label="Pandi, la mascota de PandaPop">
+  <circle cx="26" cy="28" r="16" fill="#14143C"/>
+  <circle cx="94" cy="28" r="16" fill="#14143C"/>
+  <ellipse cx="60" cy="68" rx="46" ry="42" fill="#FFFFFF" stroke="#000072" stroke-width="3"/>
+  <ellipse cx="40" cy="62" rx="11" ry="14" transform="rotate(20 40 62)" fill="#14143C"/>
+  <ellipse cx="80" cy="62" rx="11" ry="14" transform="rotate(-20 80 62)" fill="#14143C"/>
+  <circle cx="42" cy="61" r="4" fill="#FFFFFF"/>
+  <circle cx="78" cy="61" r="4" fill="#FFFFFF"/>
+  <ellipse cx="60" cy="77" rx="7" ry="5" fill="#14143C"/>
+  <path d="M52 87q8 7 16 0" fill="none" stroke="#14143C" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="30" cy="80" r="5" fill="#C3A9FF" opacity=".7"/>
+  <circle cx="90" cy="80" r="5" fill="#C3A9FF" opacity=".7"/>
+</svg>
+{%- endmacro %}
+
+{% macro marca(clase='marca') -%}
+<span class="{{ clase }}">Panda<span class="marca__pop">Pop</span></span>
+{%- endmacro %}

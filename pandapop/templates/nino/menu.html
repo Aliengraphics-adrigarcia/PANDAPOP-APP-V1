@@ -1,0 +1,23 @@
+{% extends "nino/base_nino.html" %}
+{% from "partials/_iconos.html" import icono %}
+{% set atras = url_for('nino.inicio') %}
+{% block titulo %}Menú{% endblock %}
+{% block contenido %}
+<h1>Menú</h1>
+<nav aria-label="Menú principal">
+  <ul class="menu">
+    <li><a href="{{ url_for('nino.inicio') }}#misiones">{{ icono('estrella') }}<span>Misiones del día</span>{{ icono('flecha') }}</a></li>
+    <li><a href="{{ url_for('nino.modulos') }}">{{ icono('modulos') }}<span>Módulos</span>{{ icono('flecha') }}</a></li>
+    <li><a href="{{ url_for('nino.juegos') }}">{{ icono('juego') }}<span>Juegos y Retos</span>{{ icono('flecha') }}</a></li>
+    <li><a href="{{ url_for('nino.actividades') }}">{{ icono('libro') }}<span>Mis Actividades</span>{{ icono('flecha') }}</a></li>
+    <li><a href="{{ url_for('nino.logros') }}">{{ icono('trofeo') }}<span>Mis Logros</span>{{ icono('flecha') }}</a></li>
+    <li><a href="{{ url_for('nino.avances') }}">{{ icono('avances') }}<span>Mis avances</span>{{ icono('flecha') }}</a></li>
+    <li><a href="{{ url_for('nino.recompensas') }}">{{ icono('regalo') }}<span>Recompensas</span>{{ icono('flecha') }}</a></li>
+    <li><a href="{{ url_for('nino.ayuda') }}">{{ icono('ayuda') }}<span>Ayuda</span>{{ icono('flecha') }}</a></li>
+  </ul>
+</nav>
+<form method="post" action="{{ url_for('auth.salir') }}">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <button class="btn btn--borde btn--bloque" type="submit">{{ icono('salir') }}Cerrar sesión</button>
+</form>
+{% endblock %}

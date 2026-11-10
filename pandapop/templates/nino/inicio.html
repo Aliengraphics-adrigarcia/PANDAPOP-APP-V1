@@ -1,0 +1,58 @@
+{% extends "nino/base_nino.html" %}
+{% from "partials/_iconos.html" import icono %}
+{% block titulo %}Inicio{% endblock %}
+{% block contenido %}
+<section class="saludo">
+  <h1>Hola, {{ nino.nombres.split(' ')[0] }}</h1>
+  <p>¡Bienvenido a PandaPop!</p>
+</section>
+
+{% include "partials/_nivel.html" %}
+
+<section class="seccion" id="misiones" aria-labelledby="t-misiones">
+  <h2 id="t-misiones">Misiones del día</h2>
+  {% for m in misiones %}
+    <article class="mision{% if loop.first %} mision--destacada{% endif %}">
+      <div class="mision__cabecera">
+        <h3>{{ m.titulo }}</h3>
+        <span class="etiqueta">{{ icono('reloj') }}{{ m.duracion_min }} minutos</span>
+      </div>
+      <p class="mision__modulo">{{ m.modulo }}</p>
+      <div class="progreso">
+        <progress max="100" value="{{ m.progreso }}" aria-label="Progreso de la misión">{{ m.progreso }}%</progress>
+        <span>{{ m.progreso }}%</span>
+      </div>
+      {% if loop.first %}
+        <p class="mision__animo">{% if m.progreso %}Lo estás haciendo muy bien{% else %}¡Empecemos con tu primera misión!{% endif %}</p>
+      {% endif %}
+      <a class="btn {{ 'btn--verde' if loop.first else 'btn--morado' }}" href="{{ url_for('nino.actividad', id_actividad=m.id_actividad) }}">¡Aprender!</a>
+    </article>
+  {% else %}
+    <p class="vacio">Hoy no hay misiones. ¡Explora los módulos!</p>
+  {% endfor %}
+</section>
+
+<section class="seccion" aria-labelledby="t-modulos">
+  <div class="seccion__cabecera">
+    <h2 id="t-modulos">Módulos</h2>
+    <a class="enlace" href="{{ url_for('nino.modulos') }}">Ver todo</a>
+  </div>
+  <div class="niveles">
+    {% for n in niveles %}
+      <a class="nivel-card nivel-card--{{ n.slug }}" href="{{ url_for('nino.modulos') }}#{{ n.slug }}">
+        <strong>{{ n.titulo }}</strong>
+        <span>{{ n.total }} {{ 'módulo' if n.total == 1 else 'módulos' }}</span>
+      </a>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="seccion" aria-label="Más para explorar">
+  <div class="rejilla">
+    <a class="atajo" href="{{ url_for('nino.juegos') }}">{{ icono('juego') }}<strong>Juegos y Retos</strong><span>{{ resumen.juegos }} {{ 'juego' if resumen.juegos == 1 else 'juegos' }}</span></a>
+    <a class="atajo" href="{{ url_for('nino.actividades') }}">{{ icono('libro') }}<strong>Mis Actividades</strong><span>{{ resumen.pendientes }} {{ 'pendiente' if resumen.pendientes == 1 else 'pendientes' }}</span></a>
+    <a class="atajo" href="{{ url_for('nino.logros') }}">{{ icono('trofeo') }}<strong>Mis Logros</strong><span>{{ resumen.logros }} {{ 'logro' if resumen.logros == 1 else 'logros' }}</span></a>
+    <a class="atajo" href="{{ url_for('nino.recompensas') }}">{{ icono('regalo') }}<strong>Recompensas</strong><span>Ver todo</span></a>
+  </div>
+</section>
+{% endblock %}

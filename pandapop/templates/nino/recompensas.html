@@ -1,0 +1,27 @@
+{% extends "nino/base_nino.html" %}
+{% from "partials/_iconos.html" import icono %}
+{% set atras = url_for('nino.menu') %}
+{% block titulo %}{{ titulo }}{% endblock %}
+{% block contenido %}
+<h1>{{ titulo }}</h1>
+<section class="seccion" aria-label="{{ titulo }}">
+  {% for r in lista %}
+    <article class="tarjeta recompensa{% if not r.fecha_obtencion %} recompensa--bloqueada{% endif %}">
+      <div class="recompensa__icono" aria-hidden="true">{{ icono('trofeo' if r.fecha_obtencion else 'candado') }}</div>
+      <div>
+        <p class="etiqueta">{{ r.tipo|capitalize }}</p>
+        <h2 class="recompensa__nombre">{{ r.nombre }}</h2>
+        <p class="texto-suave">{{ r.descripcion or r.condicion }}</p>
+        {% if r.fecha_obtencion %}
+          <p class="ok-texto">{{ icono('check') }}Ganada el {{ r.fecha_obtencion.strftime('%d/%m/%Y') }}</p>
+        {% else %}
+          <p class="texto-suave">Cómo ganarla: {{ r.condicion }}</p>
+        {% endif %}
+      </div>
+    </article>
+  {% else %}
+    <p class="vacio">{{ vacio }}</p>
+    <a class="btn btn--verde btn--bloque" href="{{ url_for('nino.modulos') }}">Ver módulos</a>
+  {% endfor %}
+</section>
+{% endblock %}

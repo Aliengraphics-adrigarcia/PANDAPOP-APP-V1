@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% from "partials/_iconos.html" import icono %}
+{% from "partials/_marca.html" import marca %}
+{% block clase_body %}pagina-nino{% endblock %}
+{# Las páginas hijas pueden definir {% set atras = url_for(...) %} para mostrar el botón "Volver". #}
+{% block cabecera %}
+<header class="barra">
+  {% if atras %}
+    <a class="barra__btn" href="{{ atras }}" aria-label="Volver">{{ icono('atras') }}</a>
+  {% else %}
+    <a class="barra__btn" href="{{ url_for('nino.menu') }}" aria-label="Abrir el menú">{{ icono('menu') }}</a>
+  {% endif %}
+  <a class="barra__marca" href="{{ url_for('nino.inicio') }}" aria-label="PandaPop, ir al inicio">{{ marca('marca marca--barra') }}</a>
+  <span class="barra__relleno" aria-hidden="true"></span>
+</header>
+{% endblock %}
+{% block pie %}{% include "partials/_nav_inferior.html" %}{% endblock %}

@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#000072">
+  <meta name="robots" content="noindex, nofollow">
+  <title>{% block titulo %}PandaPop{% endblock %} · PandaPop</title>
+  <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='img/favicon.svg') }}">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="{{ url_for('static', filename='fonts/poppins-latin-600-normal.woff2') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/pandapop.css') }}">
+</head>
+<body class="{% block clase_body %}{% endblock %}">
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <div class="app">
+    {% block cabecera %}{% endblock %}
+    <main id="contenido" class="contenido">
+      {% with mensajes = get_flashed_messages(with_categories=true) %}
+        {% for categoria, mensaje in mensajes %}
+          <p class="alerta alerta--{{ categoria }}" role="status">{{ mensaje }}</p>
+        {% endfor %}
+      {% endwith %}
+      {% block contenido %}{% endblock %}
+    </main>
+    {% block pie %}{% endblock %}
+  </div>
+  <script src="{{ url_for('static', filename='js/pandapop.js') }}" defer></script>
+</body>
+</html>

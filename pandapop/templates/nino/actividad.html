@@ -1,0 +1,30 @@
+{% extends "nino/base_nino.html" %}
+{% from "partials/_iconos.html" import icono %}
+{% set atras = url_for('nino.modulo', id_modulo=actividad.id_modulo) %}
+{% block titulo %}{{ actividad.titulo }}{% endblock %}
+{% block contenido %}
+<p><span class="insignia insignia--{{ 'basico' if nivel_texto == 'Básico' else ('intermedio' if nivel_texto == 'Intermedio' else 'avanzado') }}">{{ nivel_texto }}</span></p>
+<h1>{{ actividad.titulo }}</h1>
+<p class="texto-suave">{{ actividad.modulo }}</p>
+
+<ul class="datos" aria-label="Detalles de la actividad">
+  <li class="etiqueta">{{ icono('reloj') }}{{ actividad.duracion_min }} minutos</li>
+  <li class="etiqueta">{{ icono('moneda') }}{{ actividad.puntaje_maximo }} monedas</li>
+  <li class="etiqueta">{{ actividad.tipo|capitalize }}</li>
+</ul>
+
+<section class="tarjeta instrucciones" aria-labelledby="t-instr">
+  <h2 id="t-instr">Vamos a leer, sigue las instrucciones:</h2>
+  <p>{{ actividad.instrucciones }}</p>
+</section>
+
+{% if actividad.pista %}
+  <details class="pista">
+    <summary>¿Necesitas una pista?</summary>
+    <p>{{ actividad.pista }}</p>
+  </details>
+{% endif %}
+
+<a class="btn btn--verde btn--bloque" href="{{ url_for('nino.resultado', id_actividad=actividad.id_actividad) }}">¡Terminé!</a>
+<p class="nota">Versión de muestra: por ahora no se guardan tus respuestas.</p>
+{% endblock %}

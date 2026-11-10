@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% from "partials/_marca.html" import panda %}
+{% from "partials/_campo.html" import campo, selector %}
+{% block titulo %}Crear cuenta{% endblock %}
+{% block clase_body %}pagina-simple{% endblock %}
+{% block contenido %}
+<a class="volver" href="{{ url_for('auth.inicio') }}">← Volver</a>
+<section class="formulario-centrado formulario-centrado--ancho">
+  {{ panda('panda panda--mediano') }}
+  <h1>¡Regístrate en PandaPop!</h1>
+
+  {% if errores %}<p class="alerta alerta--error" role="alert">Revisa los campos marcados en rojo.</p>{% endif %}
+
+  <form method="post" action="{{ url_for('auth.registro') }}" novalidate>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+    <fieldset class="grupo">
+      <legend>Cuéntanos quién eres</legend>
+      <div class="chips" role="radiogroup">
+        <label class="chip"><input type="radio" name="quien" value="nino" {% if datos.quien == 'nino' %}checked{% endif %}><span>Niño</span></label>
+        <label class="chip"><input type="radio" name="quien" value="padre" {% if datos.quien != 'nino' %}checked{% endif %}><span>Padre o madre</span></label>
+        <label class="chip chip--bloqueado"><input type="radio" name="quien" value="docente" disabled><span>Docente <small>Pronto</small></span></label>
+        <label class="chip chip--bloqueado"><input type="radio" name="quien" value="terapeuta" disabled><span>Terapeuta <small>Pronto</small></span></label>
+      </div>
+      <p class="aviso" data-aviso-nino {% if datos.quien != 'nino' %}hidden{% endif %}>
+        Los niños se registran con un adulto. Pídele a tu acudiente que complete este formulario contigo.
+      </p>
+      {% if errores.quien %}<p class="error-texto" role="alert">{{ errores.quien }}</p>{% endif %}
+    </fieldset>
+
+    <fieldset class="grupo">
+      <legend>Completa los datos del acudiente</legend>
+      {{ campo('acu_nombres', 'Nombres', datos, errores, autocompletar='given-name', maxlen=100) }}
+      {{ campo('acu_apellidos', 'Apellidos', datos, errores, autocompletar='family-name', maxlen=100) }}
+      {{ campo('acu_correo', 'Correo', datos, errores, tipo='email', autocompletar='email', maxlen=150) }}
+      {{ campo('acu_correo2', 'Confirma correo', datos, errores, tipo='email', autocompletar='off', maxlen=150) }}
+      {{ selector('vinculo', 'Tu vínculo con el niño', opciones_vinculo, datos, errores) }}
+      {{ campo('acu_clave', 'Clave del acudiente', datos, errores, tipo='password', autocompletar='new-password', maxlen=72, ayuda='Mínimo 8 caracteres, con letras y números.') }}
+      {{ campo('acu_clave2', 'Confirma la clave', datos, errores, tipo='password', autocompletar='new-password', maxlen=72) }}
+    </fieldset>
+
+    <fieldset class="grupo">
+      <legend>Datos del niño</legend>
+      {{ campo('nino_nombres', 'Nombres', datos, errores, maxlen=100) }}
+      {{ campo('nino_apellidos', 'Apellidos', datos, errores, maxlen=100) }}
+      {{ campo('nino_nacimiento', 'Fecha de nacimiento', datos, errores, tipo='date', extra_max=hoy, ayuda='PandaPop es para niños de %d a %d años.'|format(edad_min, edad_max)) }}
+      {{ selector('nino_grado', 'Grado', opciones_grado, datos, errores, vacio='Elige un grado', requerido=false) }}
+      {{ selector('institucion', '¿Estudia en un colegio o va a un centro?', opciones_institucion, datos, errores, vacio='Ninguno por ahora', requerido=false) }}
+      {{ campo('nino_usuario', 'Usuario del niño', datos, errores, maxlen=30, ayuda='Con este nombre ingresará. Letras minúsculas, números, punto o guion bajo.') }}
+      {{ campo('nino_clave', 'Clave del niño', datos, errores, tipo='password', autocompletar='new-password', maxlen=20, ayuda='De 6 a 20 caracteres.') }}
+    </fieldset>
+
+    <fieldset class="grupo">
+      <legend>Autorizaciones</legend>
+      <label class="casilla{% if errores.consent %} casilla--error{% endif %}">
+        <input type="checkbox" name="consent_datos" value="1" {% if consent.datos %}checked{% endif %} required>
+        <span>Acepto los términos y la política de tratamiento de datos personales de mi hijo o hija, conforme a la Ley 1581 de 2012. <span class="req" aria-hidden="true">*</span></span>
+      </label>
+      {% if errores.consent %}<p class="error-texto" role="alert">{{ errores.consent }}</p>{% endif %}
+      <label class="casilla">
+        <input type="checkbox" name="consent_emocional" value="1" {% if consent.emocional %}checked{% endif %}>
+        <span>Autorizo registrar y ver las emociones que el niño comparta (opcional).</span>
+      </label>
+      <label class="casilla">
+        <input type="checkbox" name="consent_notif" value="1" {% if consent.notif %}checked{% endif %}>
+        <span>Quiero recibir notificaciones y reportes de su progreso (opcional).</span>
+      </label>
+    </fieldset>
+
+    <button class="btn btn--verde btn--bloque" type="submit">Crear cuenta</button>
+  </form>
+  <p class="centro texto-suave">¿Tu hijo o hija ya tiene perfil? <a class="enlace" href="{{ url_for('auth.ingresar') }}">Ingresar</a></p>
+</section>
+{% endblock %}

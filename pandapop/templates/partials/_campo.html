@@ -1,0 +1,42 @@
+{# Campos de formulario accesibles: etiqueta visible, ayuda y error enlazados con aria-describedby. #}
+{% from "partials/_iconos.html" import icono %}
+
+{% macro campo(nombre, etiqueta, datos, errores, tipo='text', ayuda='', requerido=true, autocompletar='off', maxlen=none, extra_max=none) -%}
+{% set error = errores.get(nombre) %}
+<div class="campo{% if error %} campo--error{% endif %}">
+  <label for="{{ nombre }}">{{ etiqueta }}{% if requerido %} <span class="req" aria-hidden="true">*</span>{% endif %}</label>
+  {% if tipo == 'password' %}
+    <div class="clave">
+      <input id="{{ nombre }}" name="{{ nombre }}" type="password" autocomplete="{{ autocompletar }}"
+             {% if requerido %}required{% endif %} {% if maxlen %}maxlength="{{ maxlen }}"{% endif %}
+             {% if error %}aria-invalid="true"{% endif %}
+             aria-describedby="{% if ayuda %}{{ nombre }}-ayuda {% endif %}{% if error %}{{ nombre }}-error{% endif %}">
+      <button type="button" class="clave__ver" data-toggle-clave="{{ nombre }}" aria-label="Mostrar u ocultar la clave">{{ icono('ojo') }}</button>
+    </div>
+  {% else %}
+    <input id="{{ nombre }}" name="{{ nombre }}" type="{{ tipo }}" value="{{ datos.get(nombre, '') }}"
+           autocomplete="{{ autocompletar }}" {% if requerido %}required{% endif %}
+           {% if maxlen %}maxlength="{{ maxlen }}"{% endif %} {% if extra_max %}max="{{ extra_max }}"{% endif %}
+           {% if tipo == 'email' %}inputmode="email"{% endif %}
+           {% if error %}aria-invalid="true"{% endif %}
+           aria-describedby="{% if ayuda %}{{ nombre }}-ayuda {% endif %}{% if error %}{{ nombre }}-error{% endif %}">
+  {% endif %}
+  {% if ayuda %}<p class="ayuda-texto" id="{{ nombre }}-ayuda">{{ ayuda }}</p>{% endif %}
+  {% if error %}<p class="error-texto" id="{{ nombre }}-error" role="alert">{{ error }}</p>{% endif %}
+</div>
+{%- endmacro %}
+
+{% macro selector(nombre, etiqueta, opciones, datos, errores, vacio='Elige una opción', requerido=true) -%}
+{% set error = errores.get(nombre) %}
+<div class="campo{% if error %} campo--error{% endif %}">
+  <label for="{{ nombre }}">{{ etiqueta }}{% if requerido %} <span class="req" aria-hidden="true">*</span>{% endif %}</label>
+  <select id="{{ nombre }}" name="{{ nombre }}" {% if requerido %}required{% endif %}
+          {% if error %}aria-invalid="true" aria-describedby="{{ nombre }}-error"{% endif %}>
+    <option value="">{{ vacio }}</option>
+    {% for valor, texto in opciones %}
+      <option value="{{ valor }}" {% if datos.get(nombre) == valor|string %}selected{% endif %}>{{ texto }}</option>
+    {% endfor %}
+  </select>
+  {% if error %}<p class="error-texto" id="{{ nombre }}-error" role="alert">{{ error }}</p>{% endif %}
+</div>
+{%- endmacro %}
